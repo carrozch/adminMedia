@@ -92,8 +92,15 @@ class AuthController extends BaseController {
 		
 			$media = Media::find(Auth::user()->media_id);
 			$new_products = Product::where('status', '=', 'free')->orderBy('created_at', 'desc')->take(5)->get();
-			$all_products = Product::where('status', '=', 'free')->orderBy('created_at', 'desc')->get();
+			$all_products = Product::where('status', '=', 'free')->orderBy('created_at', 'desc');
 			$blocked_products = Product::where('status', '=', 'blocked')->where('media_id', '=', $media->id)->orderBy('created_at', 'desc')->get();
+			
+			$per_page = 5;
+			$all_products = $all_products->paginate($per_page);
+			
+			//******
+			$name = DB::connection('brands')->table('product')->where('id', '=', 1)->first();
+			//******
 			
 			return View::make('media', array(
 				'user' => $user,
@@ -101,6 +108,8 @@ class AuthController extends BaseController {
 				'new_products' => $new_products,
 				'all_products' => $all_products,
 				'blocked_products' => $blocked_products,
+				
+				'name' => $name,
 			)); 
 		}
 		else{ // Case pure admin with no media

@@ -62,6 +62,17 @@ return array(
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
 		),
+		
+		'brands' => array(
+			'driver'    => 'mysql',
+			'host'      => 'mysql51-101.perso',
+			'database'  => 'labaiero',
+			'username'  => 'labaiero',
+			'password'  => 'a1z2e3r4',
+			'charset'   => 'utf8',
+			'collation' => 'utf8_unicode_ci',
+			'prefix'    => '',
+		),
 
 		'pgsql' => array(
 			'driver'   => 'pgsql',

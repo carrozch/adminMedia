@@ -19,6 +19,8 @@
 	</section>
     @endif
 
+	{{$name->user}}
+	
 	@if ($media != NULL)
 	
 	<section>
@@ -50,6 +52,7 @@
 				</div>
 			@endforeach
 			</div>
+			{{ $all_products->links(); }}
 		</div>
 			
 		<div class="span1">
