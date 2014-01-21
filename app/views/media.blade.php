@@ -18,8 +18,6 @@
         </div>
 	</section>
     @endif
-
-	{{$name->user}}
 	
 	@if ($media != NULL)
 	
@@ -30,12 +28,7 @@
 			</div>
 			<div class="row">
 			@foreach ($new_products as $product)
-				<div class="span3">
-					<h3>{{$product->name}} by {{$product->company_name}}</h3>
-					<p>{{$product->price}}{{$product->currency}}</p>
-					<p>{{date('d-m-Y',strtotime($product->created_at))}}</p>
-					<p>{{ link_to('auth/addproduct/'.$product->id, 'Add to My Products') }}</p>
-				</div>
+				@include('single_product', array('product' => $product, 'media' => $media))
 			@endforeach
 			</div>
 			
@@ -44,15 +37,10 @@
 			</div>
 			<div class="row">
 			@foreach ($all_products as $product)
-				<div class="span3">
-					<h3>{{$product->name}} by {{$product->company_name}}</h3>
-					<p>{{$product->price}}{{$product->currency}}</p>
-					<p>{{date('d-m-Y',strtotime($product->created_at))}}</p>
-					<p>{{ link_to('auth/addproduct/'.$product->id, 'Add to My Products') }}</p>
-				</div>
+				@include('single_product', array('product' => $product, 'media' => $media))
 			@endforeach
 			</div>
-			{{ $all_products->links(); }}
+
 		</div>
 			
 		<div class="span1">
@@ -61,12 +49,7 @@
 			</div>
 		@foreach ($blocked_products as $product)
 			<div class="row">
-				<div class="span3">
-					<h3>{{$product->name}} by {{$product->company_name}}</h3>
-					<p>{{$product->price}}{{$product->currency}}</p>
-					<p>{{date('d-m-Y',strtotime($product->created_at))}}</p>
-					<p>{{ link_to('auth/removeproduct/'.$product->id, 'Remove from My Products') }}</p>
-				</div>
+				@include('single_product', array('product' => $product, 'media' => $media))
 			</div>
 		@endforeach
 		</div>

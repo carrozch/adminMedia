@@ -25,16 +25,16 @@ class AuthController extends BaseController {
 			)); 
 	}
 	
-	public function getAddproduct($product_id = NULL)
+	public function getAddproduct($entity_id = NULL)
 	{
 		$user = User::find(Auth::user()->id);
-		if($product_id){
-			$product = Product::find($product_id);
-			if($product->status == 'free'){
-				$product->status = 'blocked';
+		if($entity_id){
+			$product = Item::find($entity_id);
+			if($product->status_media == 'free'){
+				$product->status_media = 'blocked';
 				$product->media_id = $user->media_id;
 				$product->save();
-				return Redirect::to('auth/home')->with('flash_notice', $product->name.' has been added to your selection'); 
+				return Redirect::to('auth/home')->with('flash_notice', 'The product has been added to your selection'); 
 			}
 			else{
 				return Redirect::to('auth/home')->with('flash_error', 'This product is not available'); 
@@ -45,16 +45,16 @@ class AuthController extends BaseController {
 		}
 	}
 	
-	public function getRemoveproduct($product_id = NULL)
+	public function getRemoveproduct($entity_id = NULL)
 	{
 		$user = User::find(Auth::user()->id);
-		if($product_id){
-			$product = Product::find($product_id);
-			if($product->status == 'blocked' && $product->media_id == $user->media_id){
-				$product->status = 'free';
+		if($entity_id){
+			$product = Item::find($entity_id);
+			if($product->status_media == 'blocked' && $product->media_id == $user->media_id){
+				$product->status_media = 'free';
 				$product->media_id = NULL;
 				$product->save();
-				return Redirect::to('auth/home')->with('flash_notice', $product->name.' has been removed from your selection'); 
+				return Redirect::to('auth/home')->with('flash_notice', 'The product has been removed from your selection'); 
 			}
 			else{
 				return Redirect::to('auth/home')->with('flash_error', 'This product is not yours'); 
@@ -85,22 +85,19 @@ class AuthController extends BaseController {
         }
 	}
 	
+	
 	public function getHome()
     {
 		$user = User::find(Auth::user()->id);
 		if((Auth::user()->media_id)!=NULL){
 		
 			$media = Media::find(Auth::user()->media_id);
-			$new_products = Product::where('status', '=', 'free')->orderBy('created_at', 'desc')->take(5)->get();
-			$all_products = Product::where('status', '=', 'free')->orderBy('created_at', 'desc');
-			$blocked_products = Product::where('status', '=', 'blocked')->where('media_id', '=', $media->id)->orderBy('created_at', 'desc')->get();
+			$new_products = ProductService::getFullProducts(Item::where('status_media', '=', 'free')->orderBy('created_at', 'desc')->take(5)->get());
+			$all_products = ProductService::getFullProducts(Item::where('status_media', '=', 'free')->orderBy('created_at', 'desc')->get());
+			$blocked_products = $media->products();
 			
-			$per_page = 5;
-			$all_products = $all_products->paginate($per_page);
-			
-			//******
-			$name = DB::connection('brands')->table('product')->where('id', '=', 1)->first();
-			//******
+			//$per_page = 5;
+			//$all_products = $all_products->paginate($per_page);
 			
 			return View::make('media', array(
 				'user' => $user,
@@ -108,8 +105,7 @@ class AuthController extends BaseController {
 				'new_products' => $new_products,
 				'all_products' => $all_products,
 				'blocked_products' => $blocked_products,
-				
-				'name' => $name,
+
 			)); 
 		}
 		else{ // Case pure admin with no media

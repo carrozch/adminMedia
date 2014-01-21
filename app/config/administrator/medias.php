@@ -22,7 +22,7 @@ return array(
 		),
 		'num_products' => array(
 			'title' => '# Products',
-			'relationship' => 'products',
+			'relationship' => 'getProduct',
 			'select' => 'COUNT((:table).id)',
 		),
 

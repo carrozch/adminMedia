@@ -65,10 +65,10 @@ return array(
 		
 		'brands' => array(
 			'driver'    => 'mysql',
-			'host'      => 'mysql51-101.perso',
-			'database'  => 'labaiero',
-			'username'  => 'labaiero',
-			'password'  => 'a1z2e3r4',
+			'host'      => 'localhost',
+			'database'  => 'brands',
+			'username'  => 'admin',
+			'password'  => 'admin',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',

@@ -52,7 +52,7 @@ return array(
 	 *	)
 	 */
 	'menu' => array(
-		'products',
+		'items',
 		'medias',
 		'users',
 		//'settings.site',
@@ -89,7 +89,7 @@ return array(
 	 *
 	 * @type string
 	 */
-	'home_page' => 'products',
+	'home_page' => 'items',
 
 	/**
 	 * The login path is the path where Administrator will send the user if they fail a permission check

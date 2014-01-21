@@ -1,33 +1,28 @@
 <?php
 
 /**
- * Products model config
+ * Items model config
  */
 
 return array(
 
 	'title' => 'Products',
 
-	'single' => 'product',
+	'single' => 'item',
 
-	'model' => 'Product',
+	'model' => 'Item',
 
 	/**
 	 * The display columns
 	 */
 	'columns' => array(
 		'id',
-		'name' => array(
-			'title' => 'Name',
+		'product_id' => array(
+			'title' => 'Associated Product',
+			//'relationship' => 'getProduct',
+			//'select' => '(:table).name',
 		),
-		'company_name' => array(
-			'title' => 'Company',
-		),
-		'price' => array(
-			'title' => 'Price',
-			'select' => "CONCAT((:table).price, ' ', (:table).currency)",
-		),
-		'status' => array(
+		'status_media' => array(
 			'title' => 'Status',
 		),
 		'media' => array(
@@ -35,9 +30,6 @@ return array(
 			'relationship' => 'media',
 			'select' => '(:table).name',
 
-		),
-		'description' => array(
-			'title' => 'Description',
 		),
 		'created_at',
 	),
@@ -47,10 +39,7 @@ return array(
 	 */
 	'filters' => array(
 		'id',
-		'name',
-		'company_name',
-		'price',
-		'status' => array(
+		'status_media' => array(
 			'title' => 'Status',
 			'type' => 'enum',
 			'options' => array('free', 'blocked'),
@@ -69,11 +58,7 @@ return array(
 	 * The editable fields
 	 */
 	'edit_fields' => array(
-		'name',
-		'company_name',
-		'price',
-		'currency',
-		'status' => array(
+		'status_media' => array(
 			'title' => 'Status',
 			'type' => 'enum',
 			'options' => array('free', 'blocked'),
@@ -83,7 +68,6 @@ return array(
 			'type' => 'relationship',
 			'select' => 'name',
 		),
-		'description',
 	),
 	
 	/**
@@ -91,7 +75,7 @@ return array(
 	 */
 	'global_actions' => array(
 		'import_xml' => array(
-			'title' => 'Import XML',
+			'title' => 'Update',
 			'messages' => array(
 				'active' => 'Loading...',
 				'success' => 'Success!',

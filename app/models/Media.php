@@ -1,17 +1,18 @@
 <?php
 class Media extends Eloquent {
 
-    public function getName()
-    {
-        return $this->name;
-    }
 	public function users()
     {
         return $this->hasMany('User');
     }
+	public function items()
+	{
+		return $this->hasMany('Item');
+	}
 	public function products()
 	{
-		return $this->hasMany('Product');
+		//return ProductService::getFullProducts(Item::where('status_media', '=', 'blocked')->where('media_id', '=', $this->id)->orderBy('created_at', 'desc')->get());
+		return ProductService::getFullProducts($this->items()->where('status_media', '=', 'blocked')->orderBy('created_at', 'desc')->get()); // $this->items only is enough but check if free
 	}
 
 	public static function validate($input)
